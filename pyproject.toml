@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "edgar_k_mod1_atsiskaitymas"
+version = "0.1.0"
+description = "The first module of the Python Crash Course project"
+authors = ["Edgar Kalinovski"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
