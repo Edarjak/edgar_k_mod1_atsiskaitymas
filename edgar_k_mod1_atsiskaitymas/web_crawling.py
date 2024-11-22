@@ -30,6 +30,7 @@ class WebCrawling:
         tree = html.fromstring(response.content)
 
         titles = tree.xpath('//div[contains(@class, "GRID_ITEM")]')
+
         extracted = []
 
         for product in titles:
@@ -80,6 +81,7 @@ class WebCrawling:
                         f"Product Name: {item['name']}, "
                         f"Full Price: {item['full_price']}\n"
                     )
+
 
     def get_next_page_varle(self, tree):
         next_page = tree.xpath('//li[@class="wide "]/a[@class="for-desktop"]/@href')
