@@ -30,41 +30,58 @@ class WebCrawling:
         tree = html.fromstring(response.content)
 
         titles = tree.xpath('//div[contains(@class, "GRID_ITEM")]')
-        extracted = [
-            {
-                "name": product.xpath(
+
+        extracted = []
+
+        for product in titles:
+            try:
+                name = product.xpath(
                     ".//div[contains(@class, 'product-title')]//a/text()"
-                )[0].split(),
-                "price1": product.xpath(
-                    ".//div[contains(@class, 'price-container')]//div[contains \
-                        (@class, 'price-tag')]//div[contains \
-                            @class, 'price-mid-section')]//span/span/text()"
-                )[0]
-                .strip()
-                .replace("\xa0", ""),
-                "price2": product.xpath(
-                    ".//div[contains(@class, 'price-container')]//div[contains \
-                        (@class, 'price-tag')]//div[contains \
-                            (@class, 'price-mid-section')]//span/sup/text()"
-                ),
-            }
-            for product in titles
-        ]
-
-        # Combine price1 and price2
-        for item in extracted:
-            if item["price1"] and item["price2"]:
-                full_price = item["price1"] + item["price2"][0]
-                item[
-                    "full_price"
-                ] = full_price  # Here we add the combined/full proce to the dict
-
-        for item in extracted:
-            if "full_price" in item:
-                print(
-                    f"Product Name: {' '.join(item['name'])}, \
-                        Full Price: {item['full_price']}"
                 )
+                price1 = product.xpath(
+                    ".//div[contains(@class, 'price-container')]"
+                    "//div[contains(@class, 'price-tag')]"
+                    "//div[contains(@class, 'price-mid-section')]"
+                    "//span/span/text()"
+                )
+                price2 = product.xpath(
+                    ".//div[contains(@class, 'price-container')]"
+                    "//div[contains(@class, 'price-tag')]"
+                    "//div[contains(@class, 'price-mid-section')]"
+                    "//span/sup/text()"
+                )
+
+                name = name[0].strip() if name else "Unknown"
+                price1 = price1[0].strip().replace("\xa0", "") if price1 else None
+                price2 = price2[0].strip().replace("\xa0", "") if price2 else None
+
+                full_price = f"{price1}{price2}" if price1 and price2 else price1
+
+                extracted.append(
+                    {
+                        "name": name,
+                        "price1": price1,
+                        "price2": price2,
+                        "full_price": full_price,
+                    }
+                )
+            except IndexError:
+                print(f"Failed to parse product: {product}")
+
+        for item in extracted:
+            if self.return_format == "txt":
+                with open("varle_rezultatas.txt", "a", encoding="utf-8") as failas:
+                    failas.write(
+                        f"Product Name: {item['name']}, "
+                        f"Full Price: {item['full_price']}\n"
+                    )
+            if self.return_format == "csv":
+                with open("varle_rezultatas.csv", "a", encoding="utf-8") as failas:
+                    failas.write(
+                        f"Product Name: {item['name']}, "
+                        f"Full Price: {item['full_price']}\n"
+                    )
+
 
     def get_next_page_varle(self, tree):
         next_page = tree.xpath('//li[@class="wide "]/a[@class="for-desktop"]/@href')
