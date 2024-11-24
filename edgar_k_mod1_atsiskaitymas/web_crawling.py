@@ -1,7 +1,8 @@
 """
 Module providing a web crawling method/function
 that allows to return structured different type data
-from varle.lt/ispardavimas
+from varle.lt/ispardavimas and
+https://camelia.lt/c/prekiu-medis/nereceptiniai-vaistai/persalimui-1288
 """
 
 import os
@@ -192,7 +193,7 @@ class WebCrawling:
 
 def crawl(time_limit: int, source: str, return_format: str):
     """
-    A functions that calls a crawl() method form the WebCrawling class
+    A functions that calls a crawl() method from the WebCrawling class
     """
     crawler = WebCrawling(time_limit, source, return_format)
     crawler.crawl()
