@@ -1,7 +1,7 @@
 """
 Module providing a web crawling method/function
 that allows to return structured different type data
-from varle.lt/ispardavimas and
+from https://www.varle.lt/ispardavimas/ and
 https://camelia.lt/c/prekiu-medis/nereceptiniai-vaistai/persalimui-1288
 """
 
