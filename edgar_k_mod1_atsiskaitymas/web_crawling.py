@@ -146,7 +146,12 @@ class WebCrawling:
                     )
             if self.return_format == "csv":
                 with open("camelia_rezultatas.csv", "a", encoding="utf-8") as failas:
-                    failas.write(product)
+                    failas.write(
+                        f"Product Name: {product['name']}, "
+                        f"Full Price: {product['price']}, "
+                        f"Discount: {product['discount']}, "
+                        f"Image Path of the product: {product['image_path']}\n"
+                    )
 
     def get_next_page_camelia(self, tree):
         """A method to switch pages in the cameliavaistine.lt"""
