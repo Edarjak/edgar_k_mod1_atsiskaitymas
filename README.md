@@ -84,8 +84,4 @@ You can view example output files in the [/examples](./examples/) directory of t
 
 ## PyPI Link
 
-This package is available for installation from PyPI:
-
-```
-
-```
+This package is available for installation from [PyPI](https://pypi.org/project/edgar_k_mod1_atsiskaitymas/)
