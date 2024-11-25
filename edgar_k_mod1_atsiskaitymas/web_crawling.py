@@ -29,6 +29,8 @@ class WebCrawling:
         return datetime.now() < self.end_time
 
     def scrape_page_varle(self, url):
+        """A method to crawl varle.lt"""
+
         response = get(url)
         tree = html.fromstring(response.content)
 
@@ -85,10 +87,14 @@ class WebCrawling:
                     )
 
     def get_next_page_varle(self, tree):
+        """A method to switch pages in the varle.lt"""
+
         next_page = tree.xpath('//li[@class="wide "]/a[@class="for-desktop"]/@href')
         return next_page[0] if next_page else None
 
     def scrape_page_camelia(self, url):
+        """A method to crawl cameliavaistine.lt"""
+
         response = get(url)
         text = response.text
         tree = HTML(text)
@@ -143,11 +149,17 @@ class WebCrawling:
                     failas.write(product)
 
     def get_next_page_camelia(self, tree):
+        """A method to switch pages in the cameliavaistine.lt"""
+
         next_page = tree.xpath('//span[contains(@class, "v-btn__content")]')
         return next_page[0] if next_page else None
 
     def crawl(self):
-        """Add description"""
+        """
+        A method to execute class functions/methods, track time,
+        specify URLs, page numbers.
+        """
+
         start_page = 1
         varle_url = "https://www.varle.lt/ispardavimas/"
         camelia_url = (
