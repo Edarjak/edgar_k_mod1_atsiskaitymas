@@ -183,7 +183,7 @@ class WebCrawling:
                 tree = html.fromstring(response.content)
                 next_page_url = self.get_next_page_varle(tree)
 
-                if not next_page_url:
+                if next_page_url is None or len(next_page_url) == 0:
                     print("No more pages found.")
                     break
 
@@ -199,7 +199,7 @@ class WebCrawling:
                 tree = html.fromstring(response.content)
                 next_page_url = self.get_next_page_camelia(tree)
 
-                if not next_page_url:
+                if next_page_url is None or len(next_page_url) == 0:
                     print("No more pages found.")
                     break
 
@@ -212,5 +212,11 @@ def crawl(time_limit: int, source: str, return_format: str):
     """
     A functions that calls a crawl() method from the WebCrawling class
     """
+    if not isinstance(time_limit, int):
+        raise TypeError("Wrong type of the input data")
+    if return_format != "txt" and return_format != "csv":
+        raise TypeError("Can't output in this format")
+    if source != "varle" and source != "camelia":
+        raise TypeError("Wrong source. Can crawl only cameliavaistine.lt and varle.lt")
     crawler = WebCrawling(time_limit, source, return_format)
     crawler.crawl()
