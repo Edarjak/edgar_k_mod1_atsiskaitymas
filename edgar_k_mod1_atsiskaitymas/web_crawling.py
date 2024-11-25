@@ -30,7 +30,7 @@ class WebCrawling:
 
     def scrape_page_varle(self, url):
         """A method to crawl varle.lt"""
-
+  
         response = get(url)
         tree = html.fromstring(response.content)
 
@@ -183,6 +183,7 @@ class WebCrawling:
                     break
 
                 current_page += 1
+
 
             if self.source == "camelia":
                 url = f"{camelia_url}?page={current_page}"
